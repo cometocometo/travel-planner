@@ -5,6 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   base: './',
   build: { chunkSizeWarningLimit: 2000 },
+  worker: { format: 'es' },
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',

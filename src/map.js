@@ -2,6 +2,9 @@
 // otherwise the free OpenFreeMap online style (viewed tiles are cached by the service worker).
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+// MapLibre 6 runs its map engine in a separate worker file; bundle it and point MapLibre at it.
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+maplibregl.setWorkerUrl(workerUrl);
 import { Protocol, PMTiles, FileSource } from 'pmtiles';
 import { layers, namedFlavor } from '@protomaps/basemaps';
 import { TYPE_COLORS, esc } from './util.js';
