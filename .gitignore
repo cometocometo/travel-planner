@@ -1,0 +1,6 @@
+node_modules/
+dist/
+# Never commit place data, book text or notes. Data is imported on each device.
+*.private.json
+*.pmtiles
+data/
