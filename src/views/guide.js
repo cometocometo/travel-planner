@@ -90,5 +90,7 @@ export async function guideChapter(view, [id], params) {
   if (target) {
     target.scrollIntoView({ block: 'start' });
     target.classList.add('flash');
+    // Long chapters can still change height while fonts load: jump again once the page settles.
+    requestAnimationFrame(() => setTimeout(() => target.scrollIntoView({ block: 'start' }), 300));
   }
 }

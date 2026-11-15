@@ -103,7 +103,11 @@ ul.list li a.grow { flex: 1; color: var(--fg); min-width: 0; }
 .guide .gtext table { border-collapse: collapse; margin: 8px 0; display: block; overflow-x: auto; }
 .guide .gtext td, .guide .gtext th { border: 1px solid var(--line); padding: 4px 8px; vertical-align: top; }
 .guide .gtext .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 4px 14px; margin: 14px 0; }
-.guide .gtext .poi-link { padding: 3px 0 3px 10px; border-left: 3px solid var(--line); margin: 2px 0; }
+.guide .gtext .poi { padding: 2px 0 2px 12px; border-left: 3px solid var(--line); margin: 14px 0; }
+.guide .gtext .poi-link { font-weight: 600; font-size: 17px; }
+.guide .gtext .poi .prac { font-size: 13px; color: var(--muted); line-height: 1.45; margin: 2px 0 4px; }
+.guide .gtext .poi p { margin: 6px 0; }
+.guide .gtext .caption { font-size: 14px; font-style: italic; color: var(--muted); }
 .guide .gtext .poi-link small { color: var(--muted); }
 .guide .toc ul { list-style: none; padding: 0; margin: 8px 0 0; columns: 2 220px; }
 .guide .toc li { padding: 3px 0; break-inside: avoid; }
