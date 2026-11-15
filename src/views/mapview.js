@@ -25,11 +25,14 @@ export async function mapView(view, _args, params) {
     <div class="legend small" data-count></div>
     <div class="sheet" hidden><button class="close" title="Close">×</button><div class="body"></div></div>
   </div>`;
-  if (!places.length) {
-    view.querySelector('.map').innerHTML = '<div class="notice">No places yet. Import your data in <a href="#/settings">Settings</a>.</div>';
-    return;
-  }
   const map = await createMap(view.querySelector('.map'));
+  if (!places.length) {
+    const n = document.createElement('div');
+    n.className = 'notice';
+    n.innerHTML = 'No places yet. Import your data in <a href="#/settings">Settings</a>.';
+    view.querySelector('.mapwrap').appendChild(n);
+    return () => map.remove();
+  }
   const sheet = view.querySelector('.sheet');
   const open = async id => {
     const p = await getPlace(id);
