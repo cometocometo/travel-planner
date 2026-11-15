@@ -4,10 +4,13 @@
 //   user   : your status / note per place                 key: id (place id)
 //   trips  : your trips                                    key: id
 //   meta   : key/value (import info, map notes)
+//   guides : book chapters (private, from the data bundle) key: id
 import { openDB } from 'idb';
 
-const dbp = openDB('travel-planner', 1, {
-  upgrade(db) {
+const dbp = openDB('travel-planner', 2, {
+  upgrade(db, oldVersion) {
+    if (oldVersion < 2) db.createObjectStore('guides', { keyPath: 'id' });
+    if (oldVersion >= 1) return;
     const places = db.createObjectStore('places', { keyPath: 'id' });
     places.createIndex('country', 'country');
     db.createObjectStore('texts', { keyPath: 'id' });
@@ -28,6 +31,18 @@ export async function placeMap() {
 }
 export async function getPlace(id) { return (await dbp).get('places', id); }
 export async function getText(id) { return (await dbp).get('texts', id); }
+
+// Book chapters. The list is small (titles and contents only); the text loads per chapter.
+let guideCache = null;
+export async function guideList() {
+  if (!guideCache) {
+    guideCache = (await (await dbp).getAll('guides'))
+      .map(({ html, ...rest }) => rest).sort((a, b) => a.num - b.num || a.id.localeCompare(b.id));
+  }
+  return guideCache;
+}
+export async function getGuide(id) { return (await dbp).get('guides', id); }
+export async function allGuides() { return (await dbp).getAll('guides'); }
 
 export async function getMeta(key) { return (await dbp).get('meta', key); }
 export async function setMeta(key, value) { return (await dbp).put('meta', value, key); }
@@ -73,6 +88,13 @@ export async function importBundle(bundle, onProgress = () => {}) {
     await tx.done;
     onProgress(Math.min(i + chunk, bundle.places.length), bundle.places.length);
   }
+  await db.clear('guides');
+  if (Array.isArray(bundle.guides)) {
+    const tx = db.transaction('guides', 'readwrite');
+    for (const g of bundle.guides) tx.store.put(g);
+    await tx.done;
+  }
+  guideCache = null;
   await setMeta('mapNotes', bundle.mapNotes || {});
   await setMeta('import', { built: bundle.built, imported: new Date().toISOString(), count: bundle.places.length });
   placeCache = null;

@@ -1,8 +1,9 @@
-import { allPlaces, allUser, allTrips, getMeta } from '../db.js';
+import { allPlaces, allUser, allTrips, getMeta, guideList } from '../db.js';
+import { FEATURED } from './guide.js';
 import { esc, fmtDate, addDays, placeLine } from '../util.js';
 
 export async function dashboard(view) {
-  const [places, user, trips, imp] = await Promise.all([allPlaces(), allUser(), allTrips(), getMeta('import')]);
+  const [places, user, trips, imp, guides] = await Promise.all([allPlaces(), allUser(), allTrips(), getMeta('import'), guideList()]);
   if (!places.length) {
     view.innerHTML = `<div class="page"><h1>World Travel Planner</h1>
       <div class="card"><b>No places on this device yet.</b><br>
@@ -34,6 +35,9 @@ export async function dashboard(view) {
     <h2>Trips</h2>
     ${trips.length ? trips.map(tripCard).join('') : '<p class="empty">No trips yet.</p>'}
     <a class="btn primary" href="#/trips?new=1">+ New trip</a>
+    ${guides.length ? `<h2>From the book</h2><div class="row wrap">${FEATURED.map(id => guides.find(g => g.id === id))
+      .filter(Boolean).map(g => `<a class="btn" href="#/guide/${g.id}">${esc(g.title)}</a>`).join('')}
+      <a class="btn" href="#/guide">All chapters ›</a></div>` : ''}
     <h2>Your places</h2>
     <div class="grid">
       <div class="stat"><b>${places.length.toLocaleString()}</b>places</div>

@@ -8,6 +8,7 @@ import { tripsList, tripEdit } from './views/trips.js';
 import { tripMap } from './views/tripmap.js';
 import { tripSummary } from './views/summary.js';
 import { settings } from './views/settings.js';
+import { guideIndex, guideChapter } from './views/guide.js';
 
 registerSW({ immediate: true });
 // Ask the browser not to clear our data when space is low.
@@ -22,6 +23,8 @@ const routes = [
   [/^trip\/([^/]+)\/map$/, 'trips', tripMap],
   [/^trip\/([^/]+)\/summary$/, 'trips', tripSummary],
   [/^trip\/([^/]+)$/, 'trips', tripEdit],
+  [/^guide$/, 'guide', guideIndex],
+  [/^guide\/([^/]+)$/, 'guide', guideChapter],
   [/^settings$/, 'settings', settings],
 ];
 

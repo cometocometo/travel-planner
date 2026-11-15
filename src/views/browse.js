@@ -37,9 +37,17 @@ export async function browse(view, [country, region, city]) {
   } else {
     body = placeList(list, user);
   }
+  // Book chapter for this province: the chapter most of its places come from.
+  let chapter = null;
+  if (region) {
+    const n = {};
+    for (const p of list) if (p.source?.chapter) n[p.source.chapter] = (n[p.source.chapter] || 0) + 1;
+    chapter = Object.entries(n).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+  }
   view.innerHTML = `<div class="page">
     <div class="crumbs">${crumbs.join(' › ')}</div>
     <div class="row"><h1>${esc(title)}</h1><span class="spacer"></span>
+      ${chapter ? `<a class="btn" href="#/guide/${esc(chapter)}">Book chapter</a>` : ''}
       ${country ? `<a class="btn" href="#/map?country=${encodeURIComponent(country)}">Map</a>` : ''}</div>
     ${body}</div>`;
   wireFilter(view, list, user);

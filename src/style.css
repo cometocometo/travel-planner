@@ -94,6 +94,24 @@ ul.list li a.grow { flex: 1; color: var(--fg); min-width: 0; }
 .sum-day { break-inside: avoid-page; margin-bottom: 18px; }
 .sum-stop { border-left: 3px solid var(--line); padding: 4px 0 4px 10px; margin: 8px 0; break-inside: avoid; }
 .sum-stop .zh { font-size: 1.3em; }
+/* Book reader */
+.guide .gtext { line-height: 1.6; font-size: 16px; }
+.guide .gtext h1 { font-size: 26px; }
+.guide .gtext h2 { margin-top: 28px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+.guide .gtext h3 { margin-top: 22px; }
+.guide .gtext h4 { margin: 18px 0 4px; color: var(--muted); text-transform: uppercase; font-size: 13px; letter-spacing: .04em; }
+.guide .gtext table { border-collapse: collapse; margin: 8px 0; display: block; overflow-x: auto; }
+.guide .gtext td, .guide .gtext th { border: 1px solid var(--line); padding: 4px 8px; vertical-align: top; }
+.guide .gtext .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 4px 14px; margin: 14px 0; }
+.guide .gtext .poi-link { padding: 3px 0 3px 10px; border-left: 3px solid var(--line); margin: 2px 0; }
+.guide .gtext .poi-link small { color: var(--muted); }
+.guide .toc ul { list-style: none; padding: 0; margin: 8px 0 0; columns: 2 220px; }
+.guide .toc li { padding: 3px 0; break-inside: avoid; }
+.guide .toc li.l3 { padding-left: 14px; font-size: 14px; }
+.guide .flash { animation: flash 2s ease-out; }
+@keyframes flash { from { background: color-mix(in srgb, var(--accent) 25%, transparent); } to { background: transparent; } }
+mark { background: color-mix(in srgb, var(--accent) 30%, transparent); color: inherit; }
+
 @media print {
   #tabs, .noprint { display: none !important; }
   #view { position: static; overflow: visible; }

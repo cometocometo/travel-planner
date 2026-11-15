@@ -35,6 +35,8 @@ export async function renderPlaceCard(el, p, { compact = false } = {}) {
   if (p.source?.type === 'book') {
     html += `<h3>What the book says</h3>` + (text?.book
       ? `<div class="text">${esc(text.book)}</div>` : `<div class="empty">No description in the book.</div>`);
+    if (p.source.chapter) html += `<p class="small"><a href="#/guide/${esc(p.source.chapter)}${p.source.anchor
+      ? '?a=' + encodeURIComponent(p.source.anchor) : ''}">Read it in the book chapter ›</a></p>`;
   } else {
     html += `<h3>My Maps note</h3>` + (text?.note
       ? `<div class="text">${linkify(text.note)}</div>` : `<div class="empty">No note on this place in My Maps.</div>`);
